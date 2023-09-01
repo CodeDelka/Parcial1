@@ -1,0 +1,42 @@
+void main() {
+  Venta venta = Venta();
+
+  Producto p1 = Producto('Mantequilla',DateTime(2023, 3, 8),      50.0);
+  venta.addProducto(p1);
+
+  Producto p2 = Producto('Pan',DateTime(2023,3,15), 20.0, );
+  venta.addProducto(p2);
+
+  double totalpago = venta.totalVentas();
+   print('Total a pagar: \$$totalpago');
+
+ }
+ class Producto {
+  String nombre;
+  double precio;
+  DateTime dateVencimiento;
+
+  Producto(this.nombre,this.dateVencimiento, this.precio);
+ }
+
+ class Venta {
+  List<Producto> productos = [];
+
+  void addProducto(Producto producto) {
+    productos.add(producto);
+  }
+
+  double totalVentas() {
+     double totalpago = 0;
+     DateTime hoy = DateTime.now();
+     for (Producto producto in productos) {
+      if (producto.dateVencimiento.difference(hoy).inDays 
+          <= 15) {
+        totalpago += producto.precio * 0.85;
+      } else {
+        totalpago += producto.precio;
+      }
+    }
+    return totalpago;
+  }
+}
